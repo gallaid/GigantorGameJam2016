@@ -4,6 +4,8 @@ using System.Collections;
 public class buildingManager : MonoBehaviour {
 
     public static int numBuildings = 0;
+    public float health = 1f;
+    public enum buildingType { basic, basic2, orphanage};
 
 	// Use this for initialization
 	void Start () {
