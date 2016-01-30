@@ -51,7 +51,7 @@ public class MainMap : MonoBehaviour {
             for (int y = 0; y < mapSizeY; y++)
             {
                 int n = 0;
-                if (x - 1 > 0 && x + 1 < mapSizeX && y - 1 > 0 && y + 1 < mapSizeY) //out of bounds checker
+                if (x - 1 > 0 && x + 1 < mapSizeX && y - 1 > 0 && y + 1 < mapSizeY && map[x, y] != 0) //out of bounds checker
                 {
                     if (map[x - 1, y] == 0)
                         n++;
@@ -65,7 +65,7 @@ public class MainMap : MonoBehaviour {
                         n++;
                 }
 
-                if(Random.Range(n, 5) >= 4)
+                if(Random.value * n >= 0.5)
                 {
                     map[x, y] = 2;
                 }
