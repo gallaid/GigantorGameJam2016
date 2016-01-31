@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class MonsterAI : MonoBehaviour {
-    private GameObject targetBuilding;
+    public GameObject targetBuilding;
     Rigidbody2D myRigidbody;
 
     public float health = 1f;
@@ -15,7 +15,7 @@ public class MonsterAI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
-        targetBuilding = FindClosestBuilding();
+        InvokeRepeating("FindClosestBuilding", 0, 3);
     }
 	
 	// Update is called once per frame
@@ -26,11 +26,6 @@ public class MonsterAI : MonoBehaviour {
         if(health <= 0)
         {
             Destroy(gameObject); //die
-        }
-
-        if(attackTimer % 5 < 1)
-        {
-            targetBuilding = FindClosestBuilding();
         }
 	}
 
@@ -47,7 +42,7 @@ public class MonsterAI : MonoBehaviour {
         }
     }
 
-    GameObject FindClosestBuilding()
+    void FindClosestBuilding()
     {
         GameObject[] gos;
         gos = GameObject.FindGameObjectsWithTag("building");
@@ -68,6 +63,6 @@ public class MonsterAI : MonoBehaviour {
             }
         }
 
-        return closest;
+        targetBuilding = closest;
     }
 }

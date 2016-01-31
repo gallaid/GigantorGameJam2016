@@ -10,9 +10,9 @@ public class MainMap : MonoBehaviour {
     public int mapSizeX;
     public int mapSizeY;
     private int[,] map;
-    
 
-    
+    private float tileSizeX;
+    private float tileSizeY;
 
     // Use this for initialization
     void Start () {
@@ -21,6 +21,11 @@ public class MainMap : MonoBehaviour {
         int m1 = Random.Range(0, 10);
         int n2 = mapSizeX - Random.Range(0, 10);
         int m2 = mapSizeY - Random.Range(0, 10);
+
+
+        Sprite s = tiles[0].GetComponent<SpriteRenderer>().sprite;
+        tileSizeX = s.bounds.size.x;
+        tileSizeY = s.bounds.size.y;
 
         //populate the map
         for (int x = 0; x < mapSizeX; x++)
@@ -70,11 +75,24 @@ public class MainMap : MonoBehaviour {
                     map[x, y] = 2;
                 }
 
-                GameObject tile = tiles[map[x, y]];
-                Sprite tileSprite = tile.GetComponent<SpriteRenderer>().sprite;
-
                 //put the stuff in the level
-                Instantiate(tile, new Vector3(x * tileSprite.bounds.size.x, y * tileSprite.bounds.size.y, 0), Quaternion.identity);
+                GameObject tile = tiles[map[x, y]];
+                if(map[x,y] == 1)
+                {
+                    for(int i = -1; i <= 1; i++)
+                    {
+                        for (int j = -1; j <= 1; j++)
+                        {
+                            Instantiate(tile, new Vector3((x + (float)i/3) * tileSizeX, (y + (float)j/3) * tileSizeY, 0), Quaternion.identity);
+                        }
+                    }
+                }
+                else
+                {
+
+
+                    Instantiate(tile, new Vector3(x * tileSizeX, y * tileSizeY, 0), Quaternion.identity);
+                }
             }
         }
     }
