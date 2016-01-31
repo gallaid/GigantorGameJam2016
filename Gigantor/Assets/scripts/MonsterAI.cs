@@ -7,6 +7,7 @@ public class MonsterAI : MonoBehaviour {
 
     public float health = 1f;
     public float speed = 0.01f;
+    public float speedMod = 1f;
 
     public float damage = 0.2f;
     public float attackCooldown = 1;
@@ -20,7 +21,7 @@ public class MonsterAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 moveVetor = (targetBuilding.transform.position - transform.position).normalized * speed;
+        Vector3 moveVetor = (targetBuilding.transform.position - transform.position).normalized * speed * speedMod;
         myRigidbody.velocity = (Vector2)moveVetor;
 
         if(health <= 0)
