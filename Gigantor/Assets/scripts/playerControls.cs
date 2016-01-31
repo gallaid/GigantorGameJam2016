@@ -5,7 +5,7 @@ public class playerControls : MonoBehaviour {
     public float forwardSpeed = 0.05f;
     public float reverseSpeed = 0.02f;
     public float turnSpeed = 1f;
-    
+    public float speedMod = 1f;
 
 	// Use this for initialization
 	void Start () {
@@ -18,10 +18,10 @@ public class playerControls : MonoBehaviour {
 
         //if speed is forward
         if (Input.GetAxis("Vertical") > 0){
-            transform.position += transform.up * forwardSpeed * Input.GetAxis("Vertical");
+            transform.position += transform.up * forwardSpeed * speedMod * Input.GetAxis("Vertical");
 
         } else if (Input.GetAxis("Vertical") < 0){
-            transform.position += transform.up * reverseSpeed * Input.GetAxis("Vertical");
+            transform.position += transform.up * reverseSpeed * speedMod * Input.GetAxis("Vertical");
 
         }
     }

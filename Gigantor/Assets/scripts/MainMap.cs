@@ -10,30 +10,33 @@ public class MainMap : MonoBehaviour {
     public int mapSizeX;
     public int mapSizeY;
     private int[,] map;
-    
 
-    
+    public float tileSizeX;
+    public float tileSizeY;
+
+    public int townInset;
+    public Vector3[] buildings;
 
     // Use this for initialization
     void Start () {
         map = new int[mapSizeX, mapSizeY];
-        int n1 = Random.Range(0, 10);
-        int m1 = Random.Range(0, 10);
-        int n2 = mapSizeX - Random.Range(0, 10);
-        int m2 = mapSizeY - Random.Range(0, 10);
 
-        //populate the map
+        Sprite s = tiles[0].GetComponent<SpriteRenderer>().sprite;
+        tileSizeX = s.bounds.size.x;
+        tileSizeY = s.bounds.size.y;
+
+        //populate the map with trees and a road
         for (int x = 0; x < mapSizeX; x++)
         {
-            //tree or path
+            //tree or path?
             for (int y = 0; y < mapSizeY; y++)
             {
-                if ((x == n1 || x == n2) && y >= m1 && y <= m2)
+                if ((x == townInset || x == mapSizeX - townInset) && y >= townInset && y <= mapSizeY - townInset)
                 {
                     map[x, y] = 0; //path
 
                 }
-                else if ((y == m1 || y == m2) && x >= n1 && x <= n2)
+                else if ((y == townInset || y == mapSizeY - townInset) && x >= townInset && x <= mapSizeX - townInset)
                 {
                     map[x, y] = 0; //path
 
@@ -45,36 +48,48 @@ public class MainMap : MonoBehaviour {
             }
         }
 
+        //add the buildings
+        foreach (Vector3 b in buildings)
+        {
+            map[(int)b.x, (int)b.y] = (int)b.z + 2;
+        }
+
+        //load in the level
         for (int x = 0; x < mapSizeX; x++)
         {
-            //tree or path
             for (int y = 0; y < mapSizeY; y++)
             {
-                int n = 0;
-                if (x - 1 > 0 && x + 1 < mapSizeX && y - 1 > 0 && y + 1 < mapSizeY && map[x, y] != 0) //out of bounds checker
+                //for different building models
+                int buildingType = 0;
+                if (map[x, y] > 2)
                 {
-                    if (map[x - 1, y] == 0)
-                        n++;
-                    if (map[x , y - 1] == 0)
-                        n++;
-
-                    if (map[x + 1, y] == 0)
-                        n++;
-
-                    if (map[x, y + 1] == 0)
-                        n++;
-                }
-
-                if(Random.value * n >= 0.5)
-                {
+                    buildingType = map[x, y] - 2;
                     map[x, y] = 2;
                 }
 
                 GameObject tile = tiles[map[x, y]];
-                Sprite tileSprite = tile.GetComponent<SpriteRenderer>().sprite;
 
-                //put the stuff in the level
-                Instantiate(tile, new Vector3(x * tileSprite.bounds.size.x, y * tileSprite.bounds.size.y, 0), Quaternion.identity);
+                //if it is a tree, they are placed in a 3x3 grid within the tile
+                if(map[x,y] == 1)
+                {
+                    for(int i = -1; i <= 1; i++)
+                    {
+                        for (int j = -1; j <= 1; j++)
+                        {
+                            if(Random.value > 0.7)
+                                Instantiate(tile, new Vector3((x + (float)i/3) * tileSizeX, (y + (float)j/3) * tileSizeY, 0), Quaternion.identity);
+                        }
+                    }
+                }
+                else if(map[x, y] == 2)
+                {
+                    GameObject temp = Instantiate(tile, new Vector3(x * tileSizeX, y * tileSizeY, 0), Quaternion.identity) as GameObject;
+                    temp.GetComponent<buildingManager>().type = buildingType;
+                }
+                else
+                {
+                    Instantiate(tile, new Vector3(x * tileSizeX, y * tileSizeY, 0), Quaternion.identity);
+                }
             }
         }
     }
