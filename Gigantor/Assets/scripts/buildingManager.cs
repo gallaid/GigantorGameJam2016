@@ -21,6 +21,7 @@ public class buildingManager : MonoBehaviour {
         {
             GetComponent<Animator>().Play("BuildingDestroy");
             Destroy(GetComponent<Collider2D>());
+            numBuildings--;
         }
 	}
 }
