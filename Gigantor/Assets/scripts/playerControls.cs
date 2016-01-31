@@ -8,8 +8,6 @@ public class playerControls : MonoBehaviour
     public float turnSpeed = 1f;
     public float speedMod = 1f;
 
-    private Vector3 angle = Vector3.up;
-
     // Use this for initialization
     void Start()
     {
@@ -57,6 +55,33 @@ public class playerControls : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * forwardSpeed * speedMod;
+        Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * forwardSpeed * speedMod;
+        transform.position += direction;
+
+        GetComponent<Animator>().speed = 1;
+
+        if (direction.magnitude == 0)
+        {
+            GetComponent<Animator>().speed = 0;
+
+        }
+
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            if (direction.x > 0)
+                GetComponent<Animator>().Play("playerWalkRight");
+
+            if (direction.x < 0)
+                GetComponent<Animator>().Play("playerWalkLeft");
+        }
+
+        if (Mathf.Abs(direction.x) < Mathf.Abs(direction.y))
+        {
+            if (direction.y > 0)
+                GetComponent<Animator>().Play("playerWalkUp");
+
+            if (direction.x < 0)
+                GetComponent<Animator>().Play("playerWalkDown");
+        }
     }
 }

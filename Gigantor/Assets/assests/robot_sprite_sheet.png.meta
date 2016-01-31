@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 56d302dbd269d3a46868e85ff336154f
-timeCreated: 1454266206
+timeCreated: 1454270835
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -56,7 +56,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 700
+  spritePixelsToUnits: 400
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
@@ -96,7 +96,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1180
+        y: 1167
         width: 520
         height: 590
       alignment: 7
@@ -159,8 +159,8 @@ TextureImporter:
         y: 0
         width: 520
         height: 590
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: robot_sprite_sheet_10
       rect:
@@ -169,8 +169,8 @@ TextureImporter:
         y: 0
         width: 520
         height: 590
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: robot_sprite_sheet_11
       rect:
@@ -179,8 +179,8 @@ TextureImporter:
         y: 0
         width: 520
         height: 590
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

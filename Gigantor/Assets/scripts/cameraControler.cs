@@ -16,13 +16,11 @@ public class cameraControler : MonoBehaviour {
     // Use this for initialization
     void Start () {
         mainCamera = Camera.main;
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
     }
-	
-	// Update is called once per frame
-	void Update () {
-        //camera follows player
-        //transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
 
+    // Update is called once per frame
+    void Update () {
         //zooming in and out
         zoom += Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
         if (zoom < minZoom)
