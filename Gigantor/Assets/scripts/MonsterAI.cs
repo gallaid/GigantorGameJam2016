@@ -28,7 +28,30 @@ public class MonsterAI : MonoBehaviour {
         {
             Destroy(gameObject); //die
         }
-	}
+
+        if(myRigidbody.velocity.x > 0)
+        {
+            if (myRigidbody.velocity.y > 0)
+            {
+                GetComponent<Animator>().Play("monsterUpR");
+            }
+            else
+            {
+                GetComponent<Animator>().Play("monsterDownR");
+            }
+        }
+        else
+        {
+            if (myRigidbody.velocity.y > 0)
+            {
+                GetComponent<Animator>().Play("monsterUpL");
+            }
+            else
+            {
+                GetComponent<Animator>().Play("monsterDownL");
+            }
+        }
+    }
 
     //for attacking buildings
     void OnCollisionStay2D(Collision2D coll)
@@ -39,7 +62,6 @@ public class MonsterAI : MonoBehaviour {
         {
             coll.gameObject.GetComponent<buildingManager>().health -= damage;
             attackTimer = attackCooldown;
-            GetComponent<Animator>().Play("MonsterAttack");
         }
     }
 

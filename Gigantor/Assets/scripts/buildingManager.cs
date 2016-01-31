@@ -11,7 +11,8 @@ public class buildingManager : MonoBehaviour {
 	void Start () {
         //track the total humber of buildings
         numBuildings++;
-        GetComponent<Animator>().Play("BuildingIdle" + type);
+        GetComponent<Animator>().Play("buildingStart" + type);
+        type = 0; //we only have one building right now so fix this
     }
 	
 	// Update is called once per frame
@@ -20,9 +21,18 @@ public class buildingManager : MonoBehaviour {
         //when destroyed
 	    if(health <= 0)
         {
-            GetComponent<Animator>().Play("BuildingDestroy" + type);
+            GetComponent<Animator>().Play("buildingDead" + type);
             Destroy(GetComponent<Collider2D>());
             numBuildings--;
+
         }
-	}
+        else if(health < 0.25)
+        {
+            GetComponent<Animator>().Play("buildingLow" + type);
+        }
+        else if (health < 0.5)
+        {
+            GetComponent<Animator>().Play("buildingHigh" + type);
+        }
+    }
 }
