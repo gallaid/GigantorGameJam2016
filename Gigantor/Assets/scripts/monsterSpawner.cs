@@ -15,6 +15,8 @@ public class monsterSpawner : MonoBehaviour {
     private float timer;
     private int currentDirection = 0;
 
+    public int nextLevel = 2;
+
     // Use this for initialization
     void Start () {
 	
@@ -24,7 +26,7 @@ public class monsterSpawner : MonoBehaviour {
     void Update() {
         enemiesAlive = GameObject.FindGameObjectsWithTag("enemy").Length;
         timer -= Time.deltaTime;
-        
+
         //(short circit) if there are no more monsters...
         if (waveNumber < 0 || (enemiesAlive <= 0 && numMonsters[waveNumber] <= 0))
         {
@@ -33,8 +35,14 @@ public class monsterSpawner : MonoBehaviour {
             currentDirection = Random.Range(0, 4);
         }
 
-        //spawn a monster at intervals
-        if(timer <= 0 && numMonsters[waveNumber] > 0)
+        //you win! or you lose!
+        if (waveNumber >= numMonsters.Length || buildingManager.numBuildings <= 0)
+        {
+            Application.LoadLevel(nextLevel);
+        }
+
+            //spawn a monster at intervals
+            if (timer <= 0 && numMonsters[waveNumber] > 0)
         {
             spawnMonster(currentDirection, numDirections[waveNumber]);
             numMonsters[waveNumber]--;

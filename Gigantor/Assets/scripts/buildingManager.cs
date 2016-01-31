@@ -7,6 +7,8 @@ public class buildingManager : MonoBehaviour {
     public float health = 1f;
     public int type = 0;
 
+    private bool isAlive = true;
+
 	// Use this for initialization
 	void Start () {
         //track the total humber of buildings
@@ -23,8 +25,12 @@ public class buildingManager : MonoBehaviour {
         {
             GetComponent<Animator>().Play("buildingDead" + type);
             Destroy(GetComponent<Collider2D>());
-            numBuildings--;
 
+            if (isAlive)
+            {
+                numBuildings--;
+                isAlive = false;
+            }
         }
         else if(health < 0.25)
         {
