@@ -15,6 +15,12 @@ public class buildingManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+        //when destroyed
+	    if(health <= 0)
+        {
+            GetComponent<Animator>().Play("BuildingDestroy");
+            Destroy(GetComponent<Collider2D>());
+        }
 	}
 }

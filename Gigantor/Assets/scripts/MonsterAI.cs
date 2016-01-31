@@ -2,10 +2,15 @@
 using System.Collections;
 
 public class MonsterAI : MonoBehaviour {
-    public GameObject targetBuilding;
+    private GameObject targetBuilding;
+    Rigidbody2D myRigidbody;
+
     public float health = 1f;
     public float speed = 0.01f;
-    Rigidbody2D myRigidbody;
+
+    public float damage = 0.2f;
+    public float attackCooldown = 1;
+    private float attackTimer = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +22,30 @@ public class MonsterAI : MonoBehaviour {
 	void Update () {
         Vector3 moveVetor = (targetBuilding.transform.position - transform.position).normalized * speed;
         myRigidbody.velocity = (Vector2)moveVetor;
+
+        if(health <= 0)
+        {
+            Destroy(gameObject); //die
+        }
+
+        if(attackTimer % 5 < 1)
+        {
+            targetBuilding = FindClosestBuilding();
+        }
 	}
+
+    //for attacking buildings
+    void OnCollisionStay2D(Collision2D coll)
+    {
+        attackTimer -= Time.deltaTime;
+
+        if(coll.gameObject.tag == "building" && attackTimer < 0)
+        {
+            coll.gameObject.GetComponent<buildingManager>().health -= damage;
+            attackTimer = attackCooldown;
+            GetComponent<Animator>().Play("MonsterAttack");
+        }
+    }
 
     GameObject FindClosestBuilding()
     {
