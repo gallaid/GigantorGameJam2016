@@ -11,8 +11,8 @@ public class MainMap : MonoBehaviour {
     public int mapSizeY;
     private int[,] map;
 
-    private float tileSizeX;
-    private float tileSizeY;
+    public float tileSizeX;
+    public float tileSizeY;
 
     // Use this for initialization
     void Start () {
